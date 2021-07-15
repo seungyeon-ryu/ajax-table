@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script src='https://code.jquery.com/jquery-1.12.4.min.js'></script>
+    <script>
+        $(document).ready(function(){
+            $.ajax({
+                type : "GET",
+                url : "https://api.fit-back.co/api/v1/feedback/mentor/?category=3&limit=9&offset=0&created=True",
+                dataType : "json",
+                contentType : 'application/json; charset=UTF-8',
+                error : function(){
+                    alert('통신실패!!');
+                },
+                success : function(data){
+
+                    // $('#dataArea').html(JSON.stringify(data));
+                    $.each(data.results ,function(key,value) {
+                        $('#dataArea').append(
+                            '<tr> <td>' + this.id + '</td> <td>' + '<img style width= "100px" src = ' + this.img + ' />'  + '</td> <td>'+ this.name + '</td> <td>' + this.job + '</td> <td>'
+                            + this.price + '</td> <td>' + this.reviewRate + '</td> <td>' + this.reviewCount + '</td> <td>' +
+                            this.preview + '</td> <td>' + this.unit + '</td> </tr>' );
+                    });
+                }
+            });
+        });
+    </script>
+    <style>
+        table{width:1000px; border-collapse: collapse; text-align:center;}
+        th, td{ border:1px solid #000; padding:4px 10px;}
+        tbody td:nth-child(8){text-align:left;}
+    </style>
+
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>
+            id
+        </th>
+        <th>
+            img
+        </th>
+        <th>
+            name
+        </th>
+        <th>
+            job
+        </th>
+        <th>
+            price
+        </th>
+        <th>
+            reviewRate
+        </th>
+        <th>
+            reviewCount
+        </th>
+        <th>
+            preview
+        </th>
+        <th>
+            unit
+        </th>
+    </tr>
+    </thead>
+    <tbody id="dataArea">
+
+    </tbody>
+</table>
+</body>
+</html>
